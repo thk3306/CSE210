@@ -38,7 +38,7 @@ class Program
         input = Console.ReadLine();
         if (input.ToLower() == "y")
         {
-            Main(args); // Restart the game
+            Main(args);
         }
         else if (input.ToLower() == "n")
         {
