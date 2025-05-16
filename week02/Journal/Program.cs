@@ -1,3 +1,5 @@
+// I have exceeded the requirements of this assignment by adding a new exact time stamp to the journal entries. This helps to keep better track of exactly when the entry was made.
+
 using System;
 using System.IO.Enumeration;
 
@@ -34,6 +36,9 @@ class Program
 
                 Entry newEntry = new Entry();
                 newEntry._date = DateTime.Now.ToString("dd/MM/yyyy");
+
+                newEntry._time = DateTime.Now.ToString("hh:mm tt");
+
                 newEntry._promptText = prompt;
                 Console.Write("> ");
                 newEntry._entryText = Console.ReadLine();
