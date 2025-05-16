@@ -1,4 +1,4 @@
-// I have exceeded the requirements of this assignment by adding a new exact time stamp to the journal entries. This helps to keep better track of exactly when the entry was made.
+// I have exceeded the requirements of this assignment by adding a new exact time stamp to the journal entries. This helps to keep better track of exactly when the entry was made. I have also ensured that the prompt generator is better by preventing duplicates and allowing for better diversity in the prompts.
 
 using System;
 using System.IO.Enumeration;
@@ -33,16 +33,12 @@ class Program
 
                 string prompt = newPrompt.GetRandomPrompt();
                 Console.WriteLine($"{prompt}");
-
                 Entry newEntry = new Entry();
                 newEntry._date = DateTime.Now.ToString("dd/MM/yyyy");
-
                 newEntry._time = DateTime.Now.ToString("hh:mm tt");
-
                 newEntry._promptText = prompt;
                 Console.Write("> ");
                 newEntry._entryText = Console.ReadLine();
-
                 journal1.AddEntry(newEntry);
             }
             else if (choice == 2)
