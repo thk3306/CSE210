@@ -1,4 +1,4 @@
-// I have exceeding the requirements of this assignments by adding an option for the user to enter a custom scripture reference and text to memorise.
+// I have exceeded the requirements of this assignments by adding an option for the user to enter a custom scripture reference and text to memorise.
 
 using System;
 using System.Xml.Serialization;
