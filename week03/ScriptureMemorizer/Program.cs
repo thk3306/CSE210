@@ -7,7 +7,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Do you Want to Enter a Custom Scripture Verse? (Enter 'no' to use the default of Proverbs 3:5-6)");
+        Console.WriteLine("Do you want to enter a custom Scripture verse? (Enter 'no' to use the default of Proverbs 3:5-6)");
         string choice = Console.ReadLine().ToLower();
         if (choice == "no")
         {
@@ -30,8 +30,7 @@ class Program
         }
         else if (choice != "no")
         {
-            Console.WriteLine("What is the scripture reference? (Format: Book Chapter:Verse or Book Chapter:Verse-EndVerse)");
-            Console.WriteLine("Example: John 3:16 or John 3:16-18");
+            Console.WriteLine("What is the scripture reference? (Format: John 3:16 or Book Proverbs 3:5-6)");
             string reference = Console.ReadLine();
             Console.WriteLine("What is the scripture text?");
             string text = Console.ReadLine();
