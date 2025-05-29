@@ -31,6 +31,7 @@ class Program
             {
                 Console.WriteLine($"{comment.author}:{comment.text}");
             }
+            Console.WriteLine();
         }
     }
 }
