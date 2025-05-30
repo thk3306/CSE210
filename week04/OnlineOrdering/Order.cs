@@ -27,16 +27,20 @@ public class Order
     }
     public string PackingLabel()
     {
-        string label = $"Packing Label for {_customer.GetName}:\n";
+        string label = $"Packing Label for {_customer.GetName()}:\n";
         foreach (var product in _products)
         {
-            label += $"{product.GetId} - ${product.GetName}\n";
+            label += $"{product.GetId()} - {product.GetName()}\n";
         }
         return label;
     }
 
     public string ShippingLabel()
     {
-        return $"{_customer.GetName} - {_customer.GetAddress()}";
+        return $"{_customer.GetName()} - {_customer.GetAddress().GetAddress()}";
+    }
+    public void AddProduct(Product product)
+    {
+        _products.Add(product);
     }
 }
