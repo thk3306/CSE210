@@ -2,9 +2,12 @@ using System.Reflection.Metadata.Ecma335;
 
 public class Order
 {
-    private List<Products> _products = new List<Products>();
-    private string _customerName;
-
+    private List<Product> _products = new List<Product>();
+    private Customer _customer;
+    public Order(Customer customer)
+    {
+        _customer = customer;
+    }
     public int TotalCost()
     {
         int total = 0;
@@ -12,7 +15,7 @@ public class Order
         {
             total += product.TotalCost();
         }
-        if (_customerAddress == "USA")
+        if (_customer.LivesInUSA())
         {
             total += 5;
         }
@@ -24,16 +27,16 @@ public class Order
     }
     public string PackingLabel()
     {
-        string label = $"Packing Label for {_customerName}:\n";
+        string label = $"Packing Label for {_customer.GetName}:\n";
         foreach (var product in _products)
         {
-            label += $"{product.id} - ${product.name}\n";
+            label += $"{product.GetId} - ${product.GetName}\n";
         }
         return label;
     }
 
     public string ShippingLabel()
     {
-        return $"{_customerName} - {_customerAddress}";
+        return $"{_customer.GetName} - {_customer.GetAddress()}";
     }
 }
