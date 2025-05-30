@@ -18,7 +18,7 @@ public class Video
     {
         comments.Add(comment);
     }
-    public int commentnumber()
+    public int Commentnumber()
     {
         return comments.Count;
     }

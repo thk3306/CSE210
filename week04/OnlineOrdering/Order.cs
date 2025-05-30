@@ -8,9 +8,9 @@ public class Order
     {
         _customer = customer;
     }
-    public int TotalCost()
+    public double TotalCost()
     {
-        int total = 0;
+        double total = 0;
         foreach (var product in _products)
         {
             total += product.TotalCost();
