@@ -1,8 +1,20 @@
-public class Shape
+using System.Formats.Asn1;
+
+public abstract class Shape
 {
-    private string _color;
+    protected string _color;
+
+    public Shape(string color)
+    {
+        _color = color;
+    }
     public string GetColor()
     {
-        return: _color;
+        return _color;
     }
+    public void SetColor(string color)
+    {
+        _color = color;
+    }
+    public abstract double GetArea();
 }
