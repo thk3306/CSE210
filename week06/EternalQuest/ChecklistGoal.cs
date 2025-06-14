@@ -27,5 +27,6 @@ public class ChecklistGoal : Goal
         return base.GetStringRepresentation();
     }
 
+    
 }
     
