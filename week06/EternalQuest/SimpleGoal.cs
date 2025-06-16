@@ -11,10 +11,16 @@ public class SimpleGoal : Goal
 
     public override int RecordEvent()
     {
-        Console.WriteLine($"Congratulations! You have completed the goal: {GetShortName()}");
-        _isComplete = true;
-        Console.WriteLine($"You have earned {GetPoints()} points!");
-        return int.Parse(GetPoints());
+        if (int.Parse(GetPoints()) <= 0)
+        {
+            Console.WriteLine("You did a bad thing, you lose points!");
+            Console.WriteLine($"You have lost {GetPoints()} points!");
+            return int.Parse(GetPoints());
+        }
+        else Console.WriteLine($"Congratulations! You have completed the goal: {GetShortName()}");
+            _isComplete = true;
+            Console.WriteLine($"You have earned {GetPoints()} points!");
+            return int.Parse(GetPoints());
     }
     public override bool IsComplete()
     {

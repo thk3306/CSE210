@@ -58,26 +58,33 @@ public class GoalManager
     }
     public void ListGoalNames()
     {
-        foreach (Goal goal in _goals)
+        for (int i = 0; i < _goals.Count; i++)
         {
-            Console.WriteLine($"{goal.GetShortName()}");
+            Console.WriteLine($"{i + 1}. {_goals[i].GetShortName()}");
         }
     }
     public void ListGoalDetails()
     {
         foreach (Goal goal in _goals)
         {
-            Console.WriteLine(goal.GetDetailsString());
+            if (goal.IsComplete())
+            {
+                Console.WriteLine($"[X] {goal.GetDetailsString()}");
+            }
+            else
+            {
+                Console.WriteLine($"[ ] {goal.GetDetailsString()}");
+            }
         }
     }
     public void CreateGoal()
     {
-        Console.WriteLine("The types of goals are: \n 1. Simple Goal\n 2. Eternal Goal\n 3. Checklist Goal\n");
+        Console.WriteLine("The types of goals are: \n 1. Simple Goal\n 2. Eternal Goal\n 3. Checklist Goal\n 4. Bad Habit Goal");
         Console.Write("What type of goal would you like to create?");
         int choice = int.Parse(Console.ReadLine());
         if (choice == 1)
         {
-            Console.WriteLine("What is the name of the goals?");
+            Console.WriteLine("What is the name of the goal?");
             string name = Console.ReadLine();
             Console.WriteLine("Write a short description of the goal:");
             string description = Console.ReadLine();
@@ -112,6 +119,21 @@ public class GoalManager
             ChecklistGoal checklistgoal = new ChecklistGoal(name, description, points, 0, target, bonus);
             _goals.Add(checklistgoal);
         }
+        else if (choice == 4)
+        {
+            Console.WriteLine("What is the name of your bad habit?");
+            string name = Console.ReadLine();
+            Console.WriteLine("Write a short description of it?");
+            string description = Console.ReadLine();
+            Console.WriteLine("What is the amount of negative points associated with this doing this?");
+            string points = $"-{Console.ReadLine()}";
+            SimpleGoal badHabitGoal = new SimpleGoal(name, description, points, false);
+            _goals.Add(badHabitGoal);
+        }
+        else
+        {
+            Console.WriteLine($"'{choice}' is invalid, Please enter an integer between 1 and 4");
+        }
 
     }
     public void RecordEvent()
@@ -135,10 +157,11 @@ public class GoalManager
         string filename = Console.ReadLine();
         using (StreamWriter writer = new StreamWriter(filename))
         {
+            writer.WriteLine($"Score:{_score}");
             foreach (Goal goal in _goals)
             {
                 string goalType = goal.GetType().Name;
-                writer.WriteLine($"Score:{_score}\n{goalType}:{goal.GetStringRepresentation()}");
+                writer.WriteLine($"{goalType}:{goal.GetStringRepresentation()}");
             }
         }
     }
@@ -148,33 +171,43 @@ public class GoalManager
         string filename = Console.ReadLine();
         if (File.Exists(filename))
         {
-            using (StreamReader reader = new StreamReader(filename))
+            using var reader = new StreamReader(filename);
+            string line;
+            _goals.Clear();
+            while ((line = reader.ReadLine()) != null)
             {
-                string line;
-                _goals.Clear();
-                while ((line = reader.ReadLine()) != null)
+                if (string.IsNullOrWhiteSpace(line))
+                    continue;
+
+                if (line.StartsWith("Score:"))
                 {
-                    if (line.StartsWith("SimpleGoal:"))
+                    _score = int.Parse(line[6..]);
+                }
+                else if (line.StartsWith("SimpleGoal:"))
+                {
+                    string[] parts = line[11..].Split('|');
+                    if (parts.Length >= 4)
                     {
-                        string[] parts = line.Substring(11).Split('|');
-                        SimpleGoal simpleGoal = new SimpleGoal(parts[0], parts[1], parts[2], bool.Parse(parts[3]));
+                        var simpleGoal = new SimpleGoal(parts[0], parts[1], parts[2], bool.Parse(parts[3]));
                         _goals.Add(simpleGoal);
                     }
-                    else if (line.StartsWith("EternalGoal:"))
+                }
+                else if (line.StartsWith("EternalGoal:"))
+                {
+                    string[] parts = line[12..].Split('|');
+                    if (parts.Length >= 3)
                     {
-                        string[] parts = line.Substring(12).Split('|');
-                        EternalGoal eternalGoal = new EternalGoal(parts[0], parts[1], parts[2]);
+                        var eternalGoal = new EternalGoal(parts[0], parts[1], parts[2]);
                         _goals.Add(eternalGoal);
                     }
-                    else if (line.StartsWith("ChecklistGoal:"))
+                }
+                else if (line.StartsWith("ChecklistGoal:"))
+                {
+                    string[] parts = line[14..].Split('|');
+                    if (parts.Length >= 6)
                     {
-                        string[] parts = line.Substring(14).Split('|');
-                        ChecklistGoal checklistGoal = new ChecklistGoal(parts[0], parts[1], parts[2], int.Parse(parts[3]), int.Parse(parts[4]), int.Parse(parts[5]));
+                        var checklistGoal = new ChecklistGoal(parts[0], parts[1], parts[2], int.Parse(parts[3]), int.Parse(parts[4]), int.Parse(parts[5]));
                         _goals.Add(checklistGoal);
-                    }
-                    else if (line.StartsWith("Score:"))
-                    {
-                        _score = int.Parse(line.Substring(6));
                     }
                 }
             }

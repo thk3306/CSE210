@@ -39,7 +39,7 @@ public class ChecklistGoal : Goal
     }
     public override string GetDetailsString()
     {
-        return $"[ ]{GetShortName()} {GetDescription()} -- Currently completed: {_amountCompleted}/{_target}";
+        return $"{GetShortName()} ({GetDescription()}) -- Currently completed: {_amountCompleted}/{_target}";
     }
 
     public override string GetStringRepresentation()
