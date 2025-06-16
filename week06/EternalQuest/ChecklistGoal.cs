@@ -9,22 +9,42 @@ public class ChecklistGoal : Goal
         _target = target;
         _bonus = bonus;
     }
-    public override void RecordEvent()
+    public override int RecordEvent()
     {
-
+        if (_amountCompleted < _target)
+        {
+            _amountCompleted++;
+            Console.WriteLine($"Congratulations! You have completed the goal: {GetShortName()}");
+            Console.WriteLine($"You have earned {GetPoints()} points!");
+            if (_amountCompleted == _target)
+            {
+                Console.WriteLine($"You have also earned a bonus of {_bonus} points for completing the goal {_target} times!");
+                return int.Parse(GetPoints()) + _bonus;
+            }
+        }
+        else
+        {
+            Console.WriteLine("You have already completed this goal and aquired the bonus points.");
+            Console.WriteLine($"You have earned {GetPoints()} points!");
+        }
+        return int.Parse(GetPoints());
     }
     public override bool IsComplete()
     {
-        return base.IsComplete();
+        if (_amountCompleted == _target)
+        {
+            return true;
+        }
+        else return false;
     }
     public override string GetDetailsString()
     {
-        return base.GetDetailsString();
+        return $"[ ]{GetShortName()} {GetDescription()} -- Currently completed: {_amountCompleted}/{_target}";
     }
 
     public override string GetStringRepresentation()
     {
-        return base.GetStringRepresentation();
+        return $"{GetShortName()}|{GetDescription()}|{GetPoints()}|{_amountCompleted}|{_target}|{_bonus}|";
     }
 
     

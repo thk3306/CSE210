@@ -10,17 +10,48 @@ public abstract class Goal
         _description = description;
         _points = points;
     }
-    public abstract void RecordEvent();
+    public abstract int RecordEvent();
+
     public virtual bool IsComplete()
     {
         return false;
     }
+    public string GetShortName()
+    {
+        return _shortName;
+    }
+
+    public string GetDescription()
+    {
+        return _description;
+    }
+
+    public string GetPoints()
+    {
+        return _points;
+    }
+
+    public virtual void SetShortName(string shortname)
+    {
+        _shortName = shortname;
+    }
+
+    public virtual void SetDescription(string description)
+    {
+        _description = description;
+    }
+
+    public virtual void SetPoints(string points)
+    {
+        _points = points;
+    }
+
     public virtual string GetDetailsString()
     {
-        return "";
+        return $"{GetShortName()} ({GetDescription()})";
     }
     public virtual string GetStringRepresentation()
     {
-        return "";
+        return $"{GetShortName()}|{GetDescription()}|{GetPoints()}";
     }
 }
